@@ -1,0 +1,80 @@
+{%extends 'base.html'%}
+
+{%block head%}
+<title>{{info['Name']}}</title>
+{%endblock%}
+{%block body%}
+<h1>{{info['name']}}: {{info['symbol']}}</h1>
+<table class="table table-sm table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">Max Supply</th>
+            <th scope="col">Market Pairs</th>
+        <th scope="col">Date added</th>
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bg-dark">
+          <th scope="col">{{info['name']}}</th>
+          <td>{{info['symbol']}}</td>
+          <td>{{info['max_supply']}}</td>
+          <td>{{info['num_market_pairs']}}</td>
+          <td>{{info['date_added']}}</td>
+        <td>{{info['quote']['USD']['price']}}</td>
+      </tr>
+    </tbody>
+</table>
+<h3>Market cap & Volume</h3>
+{%set quote=info['quote']['USD']%}
+<table class="table table-sm table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Fully diluted market cap</th>
+            <th scope="col">Market Cap</th>
+            <th scope="col">Market Cap Dominance</th>
+            <th scope="col">Volume 24h</th>
+            <th scope="col">Volume Change 24h</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bg-dark">
+          <th scope="col">{{quote['fully_diluted_market_cap']}}</th>
+          <td>{{quote['market_cap']}}</td>
+          <td>{{quote['market_cap_dominance']}}</td>
+          <td>{{quote['volume_24h']}}</td>
+          {%if '-' in i%}
+            <td style="color: rgb(255,89,89);">{{quote['volume_change_24h']}}</td>
+          {%else%}
+            <td style="color: rgb(0,255,0);">{{quote['volume_change_24h']}}</td>
+          {%endif%}
+      </tr>
+    </tbody>
+</table>
+<h3>Percent Changes</h3>
+<table class="table table-sm table-light">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">1h</th>
+            <th scope="col">24h</th>
+            <th scope="col">7d</th>
+            <th scope="col">30d</th>
+            <th scope="col">60d</th>
+            <th scope="col">90d</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bg-dark">
+        {%for x in quoteskeys[4:10]%}
+        {%if '-' in quote[x]|string %}
+          <td style="color: rgb(255, 89, 89);">{{quote[x]|string}}</td>
+        {%else%}
+          <td style="color:rgb(0, 255, 0)">{{quote[x]|string}}</td>
+        {%endif%}
+        {%endfor%}
+      </tr>
+    </tbody>
+</table>
+{%endblock%}

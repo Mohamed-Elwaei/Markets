@@ -1,0 +1,87 @@
+{%extends 'base.html'%}
+
+{%block head%}
+<title>{{symbol}}</title>
+{%endblock%}
+{%block body%}
+<button type="button" onclick="Show_Div(Validation_Measure);" class="btn btn-primary btn-lg btn-block">Validation Measure Quarterly</button>
+<div id="Validation_Measure" hidden>
+    <table class="table table-dark">
+            <thead>
+              <tr>
+                  <th scope="col"></th>
+                  <th scope="col" style="width:0.1%; white-space: nowrap;">{{Validation_measure.columns[0].split('  ')[0]}}<br>{{Validation_measure.columns[0].split('  ')[1]}}</th>
+                {%for col in Validation_measure.columns[1:]%}
+                <th scope="col">{{col}}</th>
+                {%endfor%}
+            </tr>
+        </thead>
+        <tbody>
+                {%for i,row in Validation_measure.iterrows()%} 
+                <tr>
+                <th scope="row">{{i}}</th>
+                {%for col in range((Validation_measure.columns|length))%}
+                <td>{{row[Validation_measure.columns[col]]}}</td>
+                 {%endfor%}
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+<div>
+<button type="button" onclick="Show_Div(Trading_Info);" class="btn btn-primary btn-lg btn-block">Trading Information</button>
+<div id="Trading_Info" hidden>
+{%for df in range(Trading_Info|length)%}
+<table class="table table-dark">
+    <h2>{{Trading_Info_titles[df]}}</h2>
+    <thead>
+      <tr>
+          <th scope="col"></th>
+          <th scope="col" style="width:0.1%; white-space: nowrap;"></th>
+    </tr>
+</thead>
+<tbody>
+    {%for i, row in Trading_Info[df].iterrows()%}
+        <tr>
+        <th scope="row">{{i}}</th>
+        <td>{{row[Trading_Info[df].columns[0]]}}</td>
+    </tr>
+    {%endfor%}
+</tbody>
+</table>
+{%endfor%}
+</div>
+<button type="button" onclick="Show_Div(Financial_highlights);" class="btn btn-primary btn-lg btn-block">Financial Information</button>
+<div id="Financial_highlights" hidden>
+{%for df in range(Financial_highlights|length)%}
+<table class="table table-dark">
+    <h2>{{Financial_highlights_titles[df]}}</h2>
+    <thead>
+      <tr>
+          <th scope="col"></th>
+          <th scope="col" style="width:0.1%; white-space: nowrap;"></th>
+    </tr>
+</thead>
+<tbody>
+    {%for i, row in Financial_highlights[df].iterrows()%}
+        <tr>
+        <th scope="row">{{i}}</th>
+        <td>{{row[Financial_highlights[df].columns[0]]}}</td>
+    </tr>
+    {%endfor%}
+</tbody>
+</table>
+{%endfor%}
+</div>
+<script>
+    function Show_Div(x){
+        let div_to_show=document.getElementById(x.id);
+        if(div_to_show.hasAttribute('hidden')){
+            document.getElementById(x.id).removeAttribute('hidden');
+        }
+        else{
+            div_to_show.setAttribute('hidden','');
+        }
+    }
+</script>
+{%endblock%}

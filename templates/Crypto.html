@@ -1,0 +1,55 @@
+{%extends 'base.html'%}
+
+{%block head%}
+<title>Crypto</title>
+{%endblock%}
+{%block body%}
+<h2>Crypto</h2>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        {%for i in range(p_int,p_int+10)%}
+        <li class="page-item"><a class="page-link" href="{{i}}">{{i}}</a></li>
+        {%endfor%}
+    </ul>
+  </nav>
+  <table class="table table-dark">
+        <thead>
+            <tr>
+                {%for i in df.columns%}
+                <th scope="col">
+                    {%if '-' in i%}
+                    <span style="color: red;">{{i}}</span>
+                    {%elif '+' in i%}
+                    <span style="color: green;">{{i}}</span>
+                    {%else%}
+                    {{i}}
+                    {%endif%}
+                </th>
+                {%endfor%}
+              </tr>
+        </thead>
+        <tbody>
+            {%for i,row in df.iterrows()%}
+            <tr>
+                <th scope="row">{{row['Name']}}</th>
+                {%for data in row[1:]%}
+                <td>
+                    {%if '-' in data|string%}
+                    <span style="color: red;">{{data|string}}</span>
+                    {%elif '+' in data|string%}
+                    <span style="color: green;">{{data|string}}</span>
+                    {%else%}
+                    {{data|string}}
+                    {%endif%}
+                </td>   
+                {%endfor%}
+                <td><div class="btn-group">
+                    <a href="../cryptocurrency/{{row['Name'].split(' ')[0]}}" style="text-decoration: none; color: white"><button type="button" class="btn btn-info"><i class="bi bi-info-circle-fill"></i> Info</button></a>
+                  </div>
+                </td>
+            </tr>
+            {%endfor%}
+        </tbody>   
+    </table>
+</div>
+{%endblock%}

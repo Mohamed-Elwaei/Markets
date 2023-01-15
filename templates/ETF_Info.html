@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+
+{%block head%}
+<title>{{symbol}}</title>
+{%endblock%}
+{%block body%}
+<style>
+    .col-sm-4{
+        color: rgba(245, 245, 245, 0.671);
+        font-size: larger;
+    }
+    span{
+        float: right;
+    }
+    .display-4{
+        color: rgba(0, 0, 0, 0.356);
+    }
+</style>
+
+<div>
+    <h1 class="display-2">{{title[0]}}</h1>
+    <h1 class="display-4">{{title[1]}}</h1>
+</div>
+<div style="background-color: black;">
+    <h1 class="display-4" style="color: rgba(245, 245, 245, 0.671);">KEY STATS</h1>
+    {%for i in range(0,labels_ks|length,3)%}
+    <div class="row">
+        <div class="col-sm-4" >{{labels_ks[i]}}: <span>  {{vals_ks[i]}}</span> </div>
+        <div class="col-sm-4">{{labels_ks[i+1]}}:<span> {{vals_ks[i+1]}}</span> </div>
+        <div class="col-sm-4">{{labels_ks[i+2]}}: <span> {{vals_ks[i+2]}}</span></div>
+      </div> 
+     {%endfor%} 
+</div>
+<div style="background-color: black;">
+    <h1 class="display-4" style="color: rgba(245, 245, 245, 0.671);">EVENTS</h1>
+    <div class="row">
+        <div class="col-sm-4" >{{labels_events[0]}}: <span>{{vals_events[0]}} </span> </div>
+        <div class="col-sm-4" >{{labels_events[1]}}: <span>{{vals_events[1]}} </span> </div>
+        <div class="col-sm-4" >{{labels_events[2]}}: <span>{{vals_events[2]}} </span> </div>
+        <div class="col-sm-4" >{{labels_events[3]}}: <span>{{vals_events[3]}} </span> </div>
+</div>
+{%endblock%}

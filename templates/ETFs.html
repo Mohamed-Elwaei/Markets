@@ -1,0 +1,47 @@
+{%extends 'base.html'%}
+
+{%block head%}
+<title>ETFs</title>
+{%endblock%}
+{%block body%}
+<h2>ETFs</h2>
+{%for title in title_with_df%}
+<h3>{{title}}</h3>
+{%set df=title_with_df[title] %}
+<table class="table table-dark">
+    <thead>
+        <tr>
+
+            <th scope="col">{{df.columns[0]}}</th>
+            {%for col in df.columns[1:]%}
+            <th scope="col">{{col}}</th>
+            {%endfor%}
+          </tr>
+    </thead>
+    <tbody>
+        {%for i,row in df.iterrows()%}
+        <tr class="bg-dark">
+            <th scope="row"> <a href="../ETF/{{row['SYMBOL']}}" style="text-decoration: none; color: white">{{row['SYMBOL']}}</a></th>
+            <td>{{row['NAME']}}</td>
+            <td>{{row['PRICE']}}</td>
+            {%if '-' in row['CHANGE']|string%}
+            <td style="color: rgb(255,89,89);">{{row['CHANGE']}}</td>
+          {%else%}
+            <td style="color: rgb(0,255,0);">{{row['CHANGE']}}</td>
+          {%endif%}
+            {%if '-' in row['%CHANGE']|string%}
+            <td style="color: rgb(255,89,89);">{{row['%CHANGE']}}</td>
+          {%else%}
+            <td style="color: rgb(0,255,0);">{{row['%CHANGE']}}</td>
+          {%endif%}
+            <td>{{row['VOLUME']}}</td>
+            <td>{{row['LOW']}}</td>
+            <td>{{row['HIGH']}}</td>
+            <td>{{row['PREVIOUS CLOSE']}}</td>
+        </tr>
+        {%endfor%}
+    </tbody>   
+</table>
+
+{%endfor%}
+{%endblock%}
